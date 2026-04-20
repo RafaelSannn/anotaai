@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Serviços (Simulação)</title>
+    <link href="css/style2.css" rel="stylesheet" title="Estilos padrão">
+</head>
+<body>
+<div id="authContainer" class="container">
+    <h2>Bem-vindo à Plataforma de Serviços (Simulação)</h2>
+    <div class="form-toggle">
+        <button id="loginBtn" class="active" onclick="showForm('login')">Login</button>
+        <button id="registerBtn" onclick="showForm('register')">Cadastro</button>
+    </div>
+
+    <div id="loginForm" class="form active">
+        <h3>Login</h3>
+        <div class="form-group">
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+            <label for="loginSenha">Senha:</label>
+            <input type="password" id="loginSenha" required>
+        </div>
+        <div class="form-group radio-group">
+            <label><input type="radio" name="tipoLogin" value="visitante" checked> Sou Visitante</label>
+            <label><input type="radio" name="tipoLogin" value="empresa"> Sou Empresa</label>
+        </div>
+        <button onclick="fazerLogin()">Entrar</button>
+    </div>
+
+    <div id="registerForm" class="form">
+        <h3>Cadastro</h3>
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" required>
+        </div>
+        <div class="form-group">
+            <label for="confirmarSenha">Confirmar Senha:</label>
+            <input type="password" id="confirmarSenha" required>
+        </div>
+        <div class="form-group radio-group">
+            <label><input type="radio" name="tipoCadastro" value="visitante" checked onchange="toggleEmpresaCampos(false)"> Sou Visitante</label>
+            <label><input type="radio" name="tipoCadastro" value="empresa" onchange="toggleEmpresaCampos(true)"> Sou Empresa</label>
+        </div>
+        <div id="empresaCampos" style="display: none;">
+            <h4>Dados da Empresa</h4>
+            <div class="form-group">
+                <label for="nomeEmpresa">Nome da Empresa:</label>
+                <input type="text" id="nomeEmpresa">
+            </div>
+            <div class="form-group">
+                <label for="localizacao">Localização:</label>
+                <input type="text" id="localizacao">
+            </div>
+            <div class="form-group">
+                <label for="cadastroCNPJ">CNPJ:</label>
+                <input type="text" id="cadastroCNPJ">
+            </div>
+            <div class="form-group">
+                <label for="categoriaEmpresa">Categoria:</label>
+                <select id="categoriaEmpresa">
+                    <option value="">Selecione uma Categoria</option>
+                    <option value="Construção">Construção</option>
+                    <option value="Reformas">Reformas</option>
+                    <option value="Elétrica">Elétrica</option>
+                    <option value="Hidráulica">Hidráulica</option>
+                    <option value="Pintura">Pintura</option>
+                    <option value="Jardinagem">Jardinagem</option>
+                    <option value="Limpeza">Limpeza</option>
+                    <option value="Segurança">Segurança</option>
+                    <option value="Informática">Informática</option>
+                    <option value="Design">Design</option>
+                    <option value="Consultoria">Consultoria</option>
+                    <option value="Eventos">Eventos</option>
+                    <option value="Automotivo">Automotivo</option>
+                    <option value="Saúde e Bem-estar">Saúde e Bem-estar</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Alimentos e Bebidas">Alimentos e Bebidas</option>
+                    <option value="Moda e Beleza">Moda e Beleza</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="fazerCadastro()">Cadastrar</button>
+    </div>
+</div>
+
+<div id="visitanteContainer" class="container" style="display: none;">
+    <div class="dashboard-header">
+        <h2 id="visitanteDashboardTitle">Dashboard do Visitante</h2>
+        <button onclick="logout()">Sair</button>
+    </div>
+    <div class="dashboard-nav">
+        <button class="active" onclick="showPage('exploreCompanies')">Explorar Empresas</button>
+        <button onclick="showPage('visitorProfile')">Meu Perfil</button>
+        <button onclick="showPage('visitorServicePublications')">Minhas Publicações de Serviço</button>
+        <button onclick="showPage('visitorChats')">Meus Chats</button>
+    </div>
+
+    <div id="exploreCompanies" class="profile-page active">
+        <h3>Explorar Empresas</h3>
+        <div class="filter-section">
+            <label for="filtroCategoria">Filtrar por Categoria:</label>
+            <select id="filtroCategoria" onchange="filtrarEmpresas()">
+                <option value="">Todas as Categorias</option>
+                <option value="Construção">Construção</option>
+                <option value="Reformas">Reformas</option>
+                <option value="Elétrica">Elétrica</option>
+                <option value="Hidráulica">Hidráulica</option>
+                <option value="Pintura">Pintura</option>
+                <option value="Jardinagem">Jardinagem</option>
+                <option value="Limpeza">Limpeza</option>
+                <option value="Segurança">Segurança</option>
+                <option value="Informática">Informática</option>
+                <option value="Design">Design</option>
+                <option value="Consultoria">Consultoria</option>
+                <option value="Eventos">Eventos</option>
+                <option value="Automotivo">Automotivo</option>
+                <option value="Saúde e Bem-estar">Saúde e Bem-estar</option>
+                <option value="Educação">Educação</option>
+                <option value="Alimentos e Bebidas">Alimentos e Bebidas</option>
+                <option value="Moda e Beleza">Moda e Beleza</option>
+                <option value="Outros">Outros</option>
+            </select>
+        </div>
+        <div id="listaEmpresas">
+        </div>
+    </div>
+
+    <div id="visitorProfile" class="profile-page">
+        <h3>Meu Perfil</h3>
+        <div class="profile-info">
+            <img id="profileVisitorImage" class="profile-image-display" src="" alt="Foto de Perfil">
+            <div class="form-group">
+                <label for="uploadVisitorImage">Alterar Foto de Perfil:</label>
+                <input type="file" id="uploadVisitorImage" accept="image/*" onchange="handleProfileImageUpload('uploadVisitorImage', 'profileVisitorImage', 'visitor')">
+            </div>
+            <p><strong>ID de Visitante:</strong> <span id="profileVisitorId"></span></p>
+            <p><strong>Email:</strong> <span id="profileVisitorEmail"></span></p>
+            <div class="form-group">
+                <label for="editarNomeVisitante">Nome:</label>
+                <input type="text" id="editarNomeVisitante">
+            </div>
+        </div>
+        <button onclick="salvarVisitante()">Salvar Alterações</button>
+    </div>
+
+    <div id="visitorServicePublications" class="profile-page publications-section">
+        <h3>Minhas Publicações de Serviço</h3>
+        <button id="addPublicationBtn" onclick="openAddPublicationModal()">Adicionar Nova Publicação</button>
+        <div id="visitorPublications">
+        </div>
+    </div>
+
+    <div id="visitorChats" class="profile-page">
+        <h3>Meus Chats</h3>
+        <ul id="visitorChatList" class="chat-list">
+        </ul>
+    </div>
+</div>
+
+<div id="empresaContainer" class="container" style="display: none;">
+    <div class="dashboard-header">
+        <h2 id="empresaDashboardTitle">Dashboard da Empresa</h2>
+        <button onclick="logout()">Sair</button>
+    </div>
+    <div class="dashboard-nav">
+        <button class="active" onclick="showPage('companyProfile')">Meu Perfil da Empresa</button>
+        <button onclick="showPage('companyServicePublications')">Minhas Publicações de Serviço</button>
+        <button onclick="showPage('companyAllVisitorPublications')">Publicações de Visitantes</button>
+        <button onclick="showPage('companyChats')">Meus Chats</button>
+    </div>
+
+    <div id="companyProfile" class="profile-page active">
+        <h3>Meu Perfil da Empresa</h3>
+        <div class="profile-info">
+            <img id="profileCompanyProfileImage" class="profile-image-display" src="" alt="Foto de Perfil da Empresa">
+            <div class="form-group">
+                <label for="uploadCompanyProfileImage">Alterar Foto de Perfil:</label>
+                <input type="file" id="uploadCompanyProfileImage" accept="image/*" onchange="handleProfileImageUpload('uploadCompanyProfileImage', 'profileCompanyProfileImage', 'company')">
+            </div>
+            <p><strong>ID da Empresa:</strong> <span id="profileCompanyId"></span></p>
+            <p><strong>Email:</strong> <span id="profileCompanyEmail"></span></p>
+            <div class="form-group">
+                <label for="editarNomeEmpresa">Nome da Empresa:</label>
+                <input type="text" id="editarNomeEmpresa">
+            </div>
+            <div class="form-group">
+                <label for="editarLocalizacaoEmpresa">Localização:</label>
+                <input type="text" id="editarLocalizacaoEmpresa">
+            </div>
+            <div class="form-group">
+                <label for="editarCategoriaEmpresa">Categoria:</label>
+                <select id="editarCategoriaEmpresa">
+                    <option value="Construção">Construção</option>
+                    <option value="Reformas">Reformas</option>
+                    <option value="Elétrica">Elétrica</option>
+                    <option value="Hidráulica">Hidráulica</option>
+                    <option value="Pintura">Pintura</option>
+                    <option value="Jardinagem">Jardinagem</option>
+                    <option value="Limpeza">Limpeza</option>
+                    <option value="Segurança">Segurança</option>
+                    <option value="Informática">Informática</option>
+                    <option value="Design">Design</option>
+                    <option value="Consultoria">Consultoria</option>
+                    <option value="Eventos">Eventos</option>
+                    <option value="Automotivo">Automotivo</option>
+                    <option value="Saúde e Bem-estar">Saúde e Bem-estar</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Alimentos e Bebidas">Alimentos e Bebidas</option>
+                    <option value="Moda e Beleza">Moda e Beleza</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="descricaoEmpresa">Descrição:</label>
+                <textarea id="descricaoEmpresa" rows="4" placeholder="Fale sobre sua empresa e os serviços que oferece..."></textarea>
+            </div>
+            <div class="form-group">
+                <p><strong>Visualizações do Perfil:</strong> <span id="companyViewsCount">0</span></p>
+            </div>
+            <div class="form-group">
+                <label for="imagensEmpresa">Imagens do Perfil (múltiplas):</label>
+                <input type="file" id="imagensEmpresa" accept="image/*" multiple onchange="mostrarImagensEmpresa()">
+                <div id="previewImagensEmpresa" class="image-gallery"></div>
+            </div>
+        </div>
+        <button onclick="salvarEmpresa()">Salvar Alterações</button>
+    </div>
+
+    <div id="companyServicePublications" class="profile-page publications-section">
+        <h3>Minhas Publicações de Serviço</h3>
+        <button id="addCompanyPublicationBtn" onclick="openAddCompanyPublicationModal()">Adicionar Nova Publicação</button>
+        <div id="companyPublications">
+        </div>
+    </div>
+
+    <div id="companyAllVisitorPublications" class="profile-page publications-section">
+        <h3>Publicações de Visitantes</h3>
+        <div id="allVisitorPublicationsList">
+            <p>Nenhuma publicação de visitante para exibir.</p>
+        </div>
+    </div>
+
+    <div id="companyChats" class="profile-page">
+        <h3>Meus Chats</h3>
+        <ul id="companyChatList" class="chat-list">
+        </ul>
+    </div>
+</div>
+
+<div id="addPublicationModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('addPublicationModal')">&times;</span>
+        <h3>Adicionar Nova Publicação de Serviço</h3>
+        <div class="form-group">
+            <label for="pubTitulo">Título:</label>
+            <input type="text" id="pubTitulo" required>
+        </div>
+        <div class="form-group">
+            <label for="pubDescricao">Descrição:</label>
+            <textarea id="pubDescricao" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="pubImagens">Imagens (múltiplas):</label>
+            <input type="file" id="pubImagens" accept="image/*" multiple onchange="mostrarImagensPublicacao()">
+            <div id="previewPubImagens" class="image-gallery"></div>
+        </div>
+        <button onclick="adicionarPublicacao()">Publicar</button>
+    </div>
+</div>
+
+<div id="addCompanyPublicationModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('addCompanyPublicationModal')">&times;</span>
+        <h3>Adicionar Nova Publicação de Serviço (Empresa)</h3>
+        <div class="form-group">
+            <label for="companyPubTitulo">Título:</label>
+            <input type="text" id="companyPubTitulo" required>
+        </div>
+        <div class="form-group">
+            <label for="companyPubDescricao">Descrição:</label>
+            <textarea id="companyPubDescricao" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="companyPubImagens">Imagens (múltiplas):</label>
+            <input type="file" id="companyPubImagens" accept="image/*" multiple onchange="mostrarImagensCompanyPublication()">
+            <div id="previewCompanyPubImagens" class="image-gallery"></div>
+        </div>
+        <button onclick="adicionarCompanyPublication()">Publicar</button>
+    </div>
+</div>
+
+<div id="companyDetailsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('companyDetailsModal')">&times;</span>
+        <div id="modalCompanyContent"></div>
+        <button onclick="startChatFromCompanyDetails()">Enviar Mensagem</button>
+        <div id="companyPublicationsInModal" class="publications-section">
+            <h4>Publicações desta Empresa:</h4>
+            <div id="modalCompanyPublicationsList"></div>
+        </div>
+    </div>
+</div>
+
+<div id="visitorPublicationDetailsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('visitorPublicationDetailsModal')">&times;</span>
+        <div id="modalVisitorPublicationContent"></div>
+        <button onclick="startChatFromVisitorPublication()">Entrar em Contato</button>
+    </div>
+</div>
+
+<div id="chatOverlay" class="chat-overlay">
+    <div class="chat-window">
+        <div class="chat-header">
+            <span id="chatWithUserName"></span>
+            <button class="close-btn" onclick="closeChat()">&times;</button>
+        </div>
+        <div id="chatMessages" class="chat-messages">
+        </div>
+        <div class="chat-input-area">
+            <input type="file" id="chatImageUpload" accept="image/*" onchange="handleImageSend()">
+            <label for="chatImageUpload" class="file-label">&#128247;</label> <input type="text" id="chatMessageInput" placeholder="Digite sua mensagem...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/script2.js"></script>
+
+</body>
+</html>
