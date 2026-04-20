@@ -1,9 +1,34 @@
-/target/
-/.idea/
-/*.iml
-/bin/
-/.settings/
-/.classpath
-/.project
+# --- JAVA & MAVEN ---
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# --- IDEs (IntelliJ, Eclipse, VSCode) ---
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+bin/
+.nb-gradle/
+
+# --- LOGS & TEMP ---
+*.log
+logs/
+temp/
+tmp/
+
+# --- SISTEMA ---
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# --- CONFIGURAÇÕES SENSÍVEIS (SEU BACKUP) ---
 application.properties.old
+.env
