@@ -1,42 +1,67 @@
 package br.com.projeto.anotaai.controller;
 
 import br.com.projeto.anotaai.model.Publicacao;
-import br.com.projeto.anotaai.repository.PublicacaoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.projeto.anotaai.service.PublicacaoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Controller REST para operações sobre publicações de serviço.
+ *
+ * Mapeado em "/api/publicacoes". Recebe JSON no body (@RequestBody)
+ * ao contrário do UsuarioController que usa form-data.
+ *
+ * Delega toda lógica ao {@link PublicacaoService}.
+ */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/publicacoes")
 public class PublicacaoController {
 
-    @Autowired
-    private PublicacaoRepository repository;
+    private final PublicacaoService service;
 
-    // CREATE (Integridade: add)
+    /**
+     * POST /api/publicacoes
+     * Cria uma nova publicação. O body JSON deve conter título, descrição,
+     * imagens (Base64), tipoAutor, nomeAutor e usuarioId.
+     * A dataCriacao é preenchida automaticamente pelo @PrePersist.
+     */
     @PostMapping
     public Publicacao criar(@RequestBody Publicacao pub) {
-        return repository.save(pub);
+        return service.criar(pub);
     }
 
-    // READ (Integridade: read)
+    /**
+     * GET /api/publicacoes/usuario/{id}
+     * Retorna todas as publicações de um usuário específico.
+     * Usado na aba "Minhas Publicações" do dashboard.
+     */
     @GetMapping("/usuario/{id}")
     public List<Publicacao> listarPorUsuario(@PathVariable Long id) {
-        return repository.findByUsuarioId(id);
+        return service.listarPorUsuario(id);
     }
 
+    /**
+     * GET /api/publicacoes/tipo/{tipo}
+     * Retorna publicações filtradas pelo tipo do autor ("visitante" ou "empresa").
+     * Usado pela empresa para ver as publicações de visitantes.
+     */
     @GetMapping("/tipo/{tipo}")
     public List<Publicacao> listarPorTipo(@PathVariable String tipo) {
-        return repository.findByTipoAutor(tipo);
+        return service.listarPorTipo(tipo);
     }
 
-    // DELETE (Integridade: exc)
+    /**
+     * DELETE /api/publicacoes/{id}
+     * Exclui uma publicação pelo ID.
+     * Retorna 204 (No Content) em sucesso ou 404 se o ID não existir.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        repository.deleteById(id);
-        return ResponseEntity.ok().build();
+        service.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

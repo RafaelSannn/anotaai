@@ -451,6 +451,93 @@ function sendMessage() {
 }
 
 // ==========================================
+// 7. ATUALIZAÇÃO DE PERFIL
+// ==========================================
+
+let pendingVisitorImage = null;
+let pendingCompanyImage = null;
+
+function handleProfileImageUpload(inputId, imgId, type) {
+    const file = document.getElementById(inputId).files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById(imgId).src = e.target.result;
+        if (type === 'visitor') pendingVisitorImage = e.target.result;
+        else pendingCompanyImage = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function salvarVisitante() {
+    const nome = document.getElementById('editarNomeVisitante').value.trim();
+    const formData = new FormData();
+    formData.append('id', currentLoggedInUser.id);
+    if (nome) formData.append('nome', nome);
+    if (pendingVisitorImage) formData.append('profileImage', pendingVisitorImage);
+
+    fetch('/php/perfil.php', { method: 'PUT', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.mensagem);
+        if (data.status === 'sucesso') {
+            if (nome) currentLoggedInUser.nome = nome;
+            if (pendingVisitorImage) currentLoggedInUser.profileImage = pendingVisitorImage;
+            pendingVisitorImage = null;
+            localStorage.setItem('currentLoggedInUser', JSON.stringify(currentLoggedInUser));
+            currentLoggedInUser.renderProfile();
+        }
+    }).catch(err => console.error('Erro ao salvar perfil:', err));
+}
+
+function salvarEmpresa() {
+    const nome = document.getElementById('editarNomeEmpresa').value.trim();
+    const localizacao = document.getElementById('editarLocalizacaoEmpresa').value.trim();
+    const categoria = document.getElementById('editarCategoriaEmpresa').value;
+    const descricao = document.getElementById('descricaoEmpresa').value.trim();
+
+    const formData = new FormData();
+    formData.append('id', currentLoggedInUser.id);
+    if (nome) formData.append('nome', nome);
+    formData.append('localizacao', localizacao);
+    formData.append('categoria', categoria);
+    formData.append('descricao', descricao);
+    if (pendingCompanyImage) formData.append('profileImage', pendingCompanyImage);
+
+    fetch('/php/perfil.php', { method: 'PUT', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.mensagem);
+        if (data.status === 'sucesso') {
+            if (nome) { currentLoggedInUser.nome = nome; currentLoggedInUser.companyDetails.name = nome; }
+            currentLoggedInUser.companyDetails.location = localizacao;
+            currentLoggedInUser.companyDetails.category = categoria;
+            currentLoggedInUser.companyDetails.description = descricao;
+            if (pendingCompanyImage) currentLoggedInUser.companyDetails.profileImage = pendingCompanyImage;
+            pendingCompanyImage = null;
+            localStorage.setItem('currentLoggedInUser', JSON.stringify(currentLoggedInUser));
+            currentLoggedInUser.renderProfile();
+        }
+    }).catch(err => console.error('Erro ao salvar empresa:', err));
+}
+
+function mostrarImagensEmpresa() {
+    const files = document.getElementById('imagensEmpresa').files;
+    const preview = document.getElementById('previewImagensEmpresa');
+    preview.innerHTML = '';
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.cssText = 'width:80px;height:80px;object-fit:cover;margin:4px;border-radius:4px;';
+            preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+// ==========================================
 // INICIALIZAÇÃO E EVENTOS DE TECLADO (ENTER)
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,41 +1,56 @@
 package br.com.projeto.anotaai.controller;
 
+import br.com.projeto.anotaai.dto.LoginResponse;
 import br.com.projeto.anotaai.model.Usuario;
-import br.com.projeto.anotaai.repository.UsuarioRepository;
-import jakarta.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.projeto.anotaai.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
+/**
+ * Controller REST para operações de usuário.
+ *
+ * Mapeado em "/php" para manter compatibilidade com o script2.js legado,
+ * que espera URLs no estilo "/php/login.php", "/php/register.php", etc.
+ *
+ * Responsabilidade: receber a requisição HTTP, delegar ao {@link UsuarioService}
+ * e devolver o ResponseEntity adequado. Nenhuma lógica de negócio aqui.
+ */
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/php") // Mantém a compatibilidade com as chamadas do script2.js
+@RequestMapping("/php")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioRepository repository;
+    private final UsuarioService service;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder; // Injeta o motor de criptografia BCrypt
-
-    // ROTA: Retorna todas as empresas cadastradas (usada pelo Explorar)
+    /**
+     * GET /php/usuarios/empresas
+     * Retorna todas as empresas cadastradas. Usado pela tela "Explorar Empresas".
+     * O campo "senha" nunca aparece no JSON graças ao @JsonIgnore na entidade.
+     */
     @GetMapping("/usuarios/empresas")
     public List<Usuario> listarEmpresas() {
-        return repository.findByTipo("empresa");
+        return service.listarEmpresas();
     }
 
-    // ROTA: Filtra empresas por categoria diretamente no MariaDB
+    /**
+     * GET /php/usuarios/empresa/{categoria}
+     * Retorna empresas filtradas por categoria. Alimenta o select de filtro do frontend.
+     */
     @GetMapping("/usuarios/empresa/{categoria}")
     public List<Usuario> listarEmpresaPorCategoria(@PathVariable String categoria) {
-        return repository.findByTipoAndCategoria("empresa", categoria);
+        return service.listarEmpresasPorCategoria(categoria);
     }
 
-    // ROTA PRINCIPAL: Cadastro de novos usuários
+    /**
+     * POST /php/register.php
+     * Cadastra um novo usuário (visitante ou empresa).
+     * Recebe os dados como form-data (@RequestParam) para compatibilidade com o script2.js.
+     * Retorna 200 em sucesso ou 400 com mensagem de erro.
+     */
     @PostMapping("/register.php")
     public ResponseEntity<Map<String, String>> cadastrar(
             @RequestParam String nome,
@@ -46,104 +61,51 @@ public class UsuarioController {
             @RequestParam(required = false) String cnpj,
             @RequestParam(required = false) String categoria) {
 
-        Map<String, String> response = new HashMap<>();
+        Map<String, String> response = service.cadastrar(nome, email, senha, tipo, localizacao, cnpj, categoria);
 
-        try {
-            // 1. VALIDAÇÃO DE SENHA: Barra senhas curtas antes de gerar o Hash
-            if (senha == null || senha.trim().length() < 6) {
-                response.put("status", "erro");
-                response.put("mensagem", "A palavra-passe deve ter pelo menos 6 caracteres.");
-                return ResponseEntity.badRequest().body(response);
-            }
-
-            // 2. VALIDAÇÃO DE E-MAIL: Impede emails repetidos
-            if (repository.findByEmail(email).isPresent()) {
-                response.put("status", "erro");
-                response.put("mensagem", "E-mail já registado. Tente outro.");
-                return ResponseEntity.badRequest().body(response);
-            }
-
-            // 3. VALIDAÇÃO DE CNPJ: Se for empresa, impede CNPJs repetidos
-            if ("empresa".equals(tipo) && cnpj != null && !cnpj.trim().isEmpty()) {
-                if (repository.findByCnpj(cnpj).isPresent()) {
-                    response.put("status", "erro");
-                    response.put("mensagem", "Este CNPJ já está registado em outra empresa.");
-                    return ResponseEntity.badRequest().body(response);
-                }
-            }
-
-            // 4. MONTAGEM DO OBJETO:
-            Usuario novoUsuario = new Usuario();
-            novoUsuario.setNome(nome);
-            novoUsuario.setEmail(email);
-
-            // CRIPTOGRAFIA: Salva apenas o Hash no banco (Segurança técnica)
-            novoUsuario.setSenha(passwordEncoder.encode(senha));
-            novoUsuario.setTipo(tipo);
-
-            if ("empresa".equals(tipo)) {
-                novoUsuario.setLocalizacao(localizacao);
-                novoUsuario.setCnpj(cnpj);
-                novoUsuario.setCategoria(categoria);
-            }
-
-            // 5. PERSISTÊNCIA:
-            repository.save(novoUsuario);
-
-            response.put("status", "sucesso");
-            response.put("mensagem", "Registo concluído com sucesso.");
-            return ResponseEntity.ok(response);
-
-        } catch (ConstraintViolationException e) {
-            // Captura erros automáticos da Entity (ex: formato de email inválido)
-            response.put("status", "erro");
-            response.put("mensagem", e.getConstraintViolations().iterator().next().getMessage());
+        if ("erro".equals(response.get("status"))) {
             return ResponseEntity.badRequest().body(response);
         }
+        return ResponseEntity.ok(response);
     }
 
-    // ROTA: Login de usuários com verificação de Hash
+    /**
+     * PUT /php/perfil.php
+     * Atualiza os dados de perfil de um usuário (nome, foto, localização, categoria, descrição).
+     * Apenas os campos enviados são atualizados — campos ausentes são preservados.
+     * Retorna 200 em sucesso ou 400 se o ID não existir.
+     */
+    @PutMapping("/perfil.php")
+    public ResponseEntity<Map<String, String>> atualizarPerfil(
+            @RequestParam Long id,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String profileImage,
+            @RequestParam(required = false) String localizacao,
+            @RequestParam(required = false) String categoria,
+            @RequestParam(required = false) String descricao) {
+
+        Map<String, String> response = service.atualizarPerfil(id, nome, profileImage, localizacao, categoria, descricao);
+        if ("erro".equals(response.get("status"))) {
+            return ResponseEntity.badRequest().body(response);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * POST /php/login.php
+     * Autentica o usuário por e-mail e senha.
+     * Retorna 200 com os dados do usuário em caso de sucesso,
+     * ou 400 com mensagem genérica em caso de credenciais inválidas.
+     */
     @PostMapping("/login.php")
-    public ResponseEntity<Map<String, Object>> login(
+    public ResponseEntity<LoginResponse> login(
             @RequestParam String email,
             @RequestParam String senha) {
 
-        Map<String, Object> response = new HashMap<>();
-        Optional<Usuario> usuarioOp = repository.findByEmail(email);
-
-        // BCRYPT MATCHES: Compara a senha digitada com o Hash do banco
-        if (usuarioOp.isEmpty() || !passwordEncoder.matches(senha, usuarioOp.get().getSenha())) {
-            response.put("status", "erro");
-            response.put("mensagem", "E-mail ou palavra-passe incorretos.");
+        LoginResponse response = service.login(email, senha);
+        if ("erro".equals(response.getStatus())) {
             return ResponseEntity.badRequest().body(response);
         }
-
-        Usuario u = usuarioOp.get();
-        Map<String, Object> usuarioFormatado = new HashMap<>();
-        usuarioFormatado.put("id", u.getId());
-        usuarioFormatado.put("nome", u.getNome());
-        usuarioFormatado.put("email", u.getEmail());
-        usuarioFormatado.put("tipo", u.getTipo());
-        usuarioFormatado.put("profileImage", u.getProfileImage());
-
-        // Se for empresa, monta o objeto de detalhes exigido pelo script2.js
-        if ("empresa".equals(u.getTipo())) {
-            Map<String, Object> companyDetails = new HashMap<>();
-            companyDetails.put("name", u.getNome());
-            companyDetails.put("location", u.getLocalizacao());
-            companyDetails.put("cnpj", u.getCnpj());
-            companyDetails.put("category", u.getCategoria());
-            companyDetails.put("description", u.getDescricao());
-            companyDetails.put("views", 0);
-            companyDetails.put("images", new java.util.ArrayList<>());
-
-            usuarioFormatado.put("companyDetails", companyDetails);
-        }
-
-        response.put("status", "sucesso");
-        response.put("mensagem", "Sessão iniciada com sucesso.");
-        response.put("usuario", usuarioFormatado);
-
         return ResponseEntity.ok(response);
     }
 }
