@@ -7,6 +7,12 @@
     <link href="css/style2.css" rel="stylesheet" title="Estilos padrão">
 </head>
 <body>
+<!-- Botão de Alternância de Tema -->
+<button id="themeToggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
+    <span class="icon" id="themeIcon">🌙</span>
+    <span id="themeText">Escuro</span>
+</button>
+
 <div id="authContainer" class="container">
     <h2>Bem-vindo à Plataforma de Serviços (Simulação)</h2>
     <div class="form-toggle">
@@ -18,54 +24,75 @@
         <h3>Login</h3>
         <div class="form-group">
             <label for="loginEmail">Email:</label>
-            <input type="email" id="loginEmail" required>
+            <input type="email" id="loginEmail" required autocomplete="email">
+            <span class="error-message" id="loginEmailError"></span>
         </div>
         <div class="form-group">
             <label for="loginSenha">Senha:</label>
-            <input type="password" id="loginSenha" required>
+            <div class="password-wrapper">
+                <input type="password" id="loginSenha" required autocomplete="current-password">
+                <button type="button" class="password-toggle" onclick="togglePassword('loginSenha', this)" tabindex="-1" aria-label="Mostrar senha">👁</button>
+            </div>
+            <span class="error-message" id="loginSenhaError"></span>
         </div>
-        <div class="form-group radio-group">
-            <label><input type="radio" name="tipoLogin" value="visitante" checked> Sou Visitante</label>
-            <label><input type="radio" name="tipoLogin" value="empresa"> Sou Empresa</label>
-        </div>
-        <button onclick="fazerLogin()">Entrar</button>
+        <button onclick="fazerLogin()">
+            <span class="btn-text">Entrar</span>
+            <span class="btn-spinner"></span>
+        </button>
     </div>
 
     <div id="registerForm" class="form">
         <h3>Cadastro</h3>
+        <div class="form-group toggle-group" id="cadastroTipoToggle">
+            <label class="toggle-pill active">
+                <input type="radio" name="tipoCadastro" value="visitante" checked onchange="toggleEmpresaCampos(false)"> Sou Visitante
+            </label>
+            <label class="toggle-pill">
+                <input type="radio" name="tipoCadastro" value="empresa" onchange="toggleEmpresaCampos(true)"> Sou Empresa
+            </label>
+        </div>
         <div class="form-group">
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" required>
+            <input type="text" id="nome" required autocomplete="name">
+            <span class="error-message" id="nomeError"></span>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" required>
+            <input type="email" id="email" required autocomplete="email">
+            <span class="error-message" id="emailError"></span>
         </div>
         <div class="form-group">
             <label for="senha">Senha:</label>
-            <input type="password" id="senha" required>
+            <div class="password-wrapper">
+                <input type="password" id="senha" required autocomplete="new-password">
+                <button type="button" class="password-toggle" onclick="togglePassword('senha', this)" tabindex="-1" aria-label="Mostrar senha">👁</button>
+            </div>
+            <span class="error-message" id="senhaError"></span>
         </div>
         <div class="form-group">
             <label for="confirmarSenha">Confirmar Senha:</label>
-            <input type="password" id="confirmarSenha" required>
-        </div>
-        <div class="form-group radio-group">
-            <label><input type="radio" name="tipoCadastro" value="visitante" checked onchange="toggleEmpresaCampos(false)"> Sou Visitante</label>
-            <label><input type="radio" name="tipoCadastro" value="empresa" onchange="toggleEmpresaCampos(true)"> Sou Empresa</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirmarSenha" required autocomplete="new-password">
+                <button type="button" class="password-toggle" onclick="togglePassword('confirmarSenha', this)" tabindex="-1" aria-label="Mostrar senha">👁</button>
+            </div>
+            <span class="error-message" id="confirmarSenhaError"></span>
         </div>
         <div id="empresaCampos" style="display: none;">
             <h4>Dados da Empresa</h4>
             <div class="form-group">
                 <label for="nomeEmpresa">Nome da Empresa:</label>
                 <input type="text" id="nomeEmpresa">
+                <span class="error-message" id="nomeEmpresaError"></span>
             </div>
             <div class="form-group">
                 <label for="localizacao">Localização:</label>
                 <input type="text" id="localizacao">
+                <span class="error-message" id="localizacaoError"></span>
             </div>
             <div class="form-group">
                 <label for="cadastroCNPJ">CNPJ:</label>
-                <input type="text" id="cadastroCNPJ">
+                <input type="text" id="cadastroCNPJ" placeholder="00.000.000/0000-00" maxlength="18">
+                <span class="error-message" id="cadastroCNPJError"></span>
             </div>
             <div class="form-group">
                 <label for="categoriaEmpresa">Categoria:</label>
@@ -90,9 +117,13 @@
                     <option value="Moda e Beleza">Moda e Beleza</option>
                     <option value="Outros">Outros</option>
                 </select>
+                <span class="error-message" id="categoriaEmpresaError"></span>
             </div>
         </div>
-        <button onclick="fazerCadastro()">Cadastrar</button>
+        <button onclick="fazerCadastro()">
+            <span class="btn-text">Cadastrar</span>
+            <span class="btn-spinner"></span>
+        </button>
     </div>
 </div>
 
@@ -338,6 +369,7 @@
     </div>
 </div>
 
+<script src="js/theme.js"></script>
 <script src="js/script2.js"></script>
 
 </body>

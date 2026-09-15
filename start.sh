@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo "🚀 Iniciando AnotaAí..."
+echo ""
+
+# Cores
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Iniciar aplicação em background
+./mvnw spring-boot:run > anotaai.log 2>&1 &
+PID=$!
+
+echo "⏳ Aguardando inicialização..."
+sleep 10
+
+# Verificar se está rodando
+if ps -p $PID > /dev/null; then
+    echo -e "${GREEN}✓ Aplicação iniciada com sucesso!${NC}"
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo -e "${BLUE}🌐 Acesse: http://localhost:8080${NC}"
+    echo "🗄️  Console H2: http://localhost:8080/h2-console"
+    echo ""
+    echo "📧 Logins de teste:"
+    echo "   Visitante: joao@email.com / 123456"
+    echo "   Empresa: techfix@empresa.com / 123456"
+    echo ""
+    echo "📋 Log: tail -f anotaai.log"
+    echo "🛑 Parar: ./stop.sh ou kill $PID"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "PID: $PID" > anotaai.pid
+else
+    echo "✗ Erro ao iniciar aplicação"
+    echo "Verifique anotaai.log para detalhes"
+    exit 1
+fi

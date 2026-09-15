@@ -63,6 +63,73 @@ class UserFactory {
 }
 
 // ==========================================
+// 1.5 FUNÇÕES AUXILIARES DE FORMULÁRIO
+// ==========================================
+
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    btn.textContent = isPassword ? '🙈' : '👁';
+    btn.setAttribute('aria-label', isPassword ? 'Ocultar senha' : 'Mostrar senha');
+}
+
+function mostrarErro(elementId, mensagem) {
+    const el = document.getElementById(elementId);
+    if (el) {
+        el.textContent = mensagem;
+        el.classList.add('visible');
+    }
+}
+
+function limparErros() {
+    document.querySelectorAll('.error-message').forEach(e => {
+        e.textContent = '';
+        e.classList.remove('visible');
+    });
+    document.querySelectorAll('.input-error').forEach(e => e.classList.remove('input-error'));
+    document.querySelectorAll('.input-success').forEach(e => e.classList.remove('input-success'));
+}
+
+function setLoading(button, loading) {
+    if (loading) {
+        button.classList.add('loading');
+        button.disabled = true;
+    } else {
+        button.classList.remove('loading');
+        button.disabled = false;
+    }
+}
+
+function validarEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validarCNPJ(cnpj) {
+    const nums = cnpj.replace(/[^\d]/g, '');
+    if (nums.length !== 14) return false;
+    if (/^(\d)\1{13}$/.test(nums)) return false;
+    let soma = 0, peso = 5;
+    for (let i = 0; i < 12; i++) { soma += parseInt(nums[i]) * peso; peso = peso === 2 ? 9 : peso - 1; }
+    let dig1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (parseInt(nums[12]) !== dig1) return false;
+    soma = 0; peso = 6;
+    for (let i = 0; i < 13; i++) { soma += parseInt(nums[i]) * peso; peso = peso === 2 ? 9 : peso - 1; }
+    let dig2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    return parseInt(nums[13]) === dig2;
+}
+
+function formatarCNPJ(input) {
+    let val = input.value.replace(/[^\d]/g, '').slice(0, 14);
+    if (val.length > 2) val = val.slice(0, 2) + '.' + val.slice(2);
+    if (val.length > 6) val = val.slice(0, 6) + '.' + val.slice(6);
+    if (val.length > 10) val = val.slice(0, 10) + '/' + val.slice(10);
+    if (val.length > 15) val = val.slice(0, 15) + '-' + val.slice(15);
+    input.value = val;
+}
+
+// ==========================================
 // 2. INICIALIZAÇÃO
 // ==========================================
 function loadApp() {
@@ -77,6 +144,7 @@ function loadApp() {
 }
 
 function showForm(formId) {
+    limparErros();
     document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
     document.getElementById(formId + 'Form').classList.add('active');
     document.querySelectorAll('.form-toggle button').forEach(b => b.classList.remove('active'));
@@ -120,30 +188,57 @@ function showPage(pageId) {
 // 3. AUTENTICAÇÃO COM API (Erros tratados)
 // ==========================================
 function fazerCadastro() {
+    limparErros();
+    const btn = document.querySelector('#registerForm button');
+    setLoading(btn, true);
+
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('email').value.trim();
     const senha = document.getElementById('senha').value;
     const confSenha = document.getElementById('confirmarSenha').value;
 
-    if (senha !== confSenha) return alert("As palavras-passe não conferem!");
+    let valido = true;
+
+    if (!nome) { mostrarErro('nomeError', 'Nome é obrigatório.'); valido = false; }
+    if (!email) { mostrarErro('emailError', 'Email é obrigatório.'); valido = false; }
+    else if (!validarEmail(email)) { mostrarErro('emailError', 'Email inválido.'); valido = false; }
+    if (!senha) { mostrarErro('senhaError', 'Senha é obrigatória.'); valido = false; }
+    else if (senha.length < 6) { mostrarErro('senhaError', 'Mínimo de 6 caracteres.'); valido = false; }
+    if (!confSenha) { mostrarErro('confirmarSenhaError', 'Confirme sua senha.'); valido = false; }
+    else if (senha !== confSenha) { mostrarErro('confirmarSenhaError', 'Senhas não conferem.'); valido = false; }
+
+    const tipoCadastro = document.querySelector('input[name="tipoCadastro"]:checked').value;
+
+    if (tipoCadastro === 'empresa') {
+        const nomeEmp = document.getElementById('nomeEmpresa').value.trim();
+        const local = document.getElementById('localizacao').value.trim();
+        const cnpj = document.getElementById('cadastroCNPJ').value.trim();
+        const cat = document.getElementById('categoriaEmpresa').value;
+        if (!nomeEmp) { mostrarErro('nomeEmpresaError', 'Nome da empresa é obrigatório.'); valido = false; }
+        if (!local) { mostrarErro('localizacaoError', 'Localização é obrigatória.'); valido = false; }
+        if (!cnpj) { mostrarErro('cadastroCNPJError', 'CNPJ é obrigatório.'); valido = false; }
+        else if (!validarCNPJ(cnpj)) { mostrarErro('cadastroCNPJError', 'CNPJ inválido.'); valido = false; }
+        if (!cat) { mostrarErro('categoriaEmpresaError', 'Selecione uma categoria.'); valido = false; }
+    }
+
+    if (!valido) { setLoading(btn, false); return; }
 
     const formData = new FormData();
     formData.append('nome', nome);
     formData.append('email', email);
     formData.append('senha', senha);
-
-    const tipoCadastro = document.querySelector('input[name="tipoCadastro"]:checked').value;
     formData.append('tipo', tipoCadastro);
 
     if (tipoCadastro === 'empresa') {
-        formData.append('localizacao', document.getElementById('localizacao').value);
-        formData.append('cnpj', document.getElementById('cadastroCNPJ').value);
+        formData.append('localizacao', document.getElementById('localizacao').value.trim());
+        formData.append('cnpj', document.getElementById('cadastroCNPJ').value.replace(/[^\d]/g, ''));
         formData.append('categoria', document.getElementById('categoriaEmpresa').value);
     }
 
     fetch('/php/register.php', { method: 'POST', body: formData })
     .then(res => res.json())
     .then(data => {
+        setLoading(btn, false);
         alert(data.mensagem);
         if (data.status === 'sucesso') {
             document.getElementById('senha').value = '';
@@ -151,24 +246,41 @@ function fazerCadastro() {
             document.getElementById('loginEmail').value = email;
             showForm('login');
         }
-    }).catch(err => console.error(err));
+    }).catch(err => { setLoading(btn, false); console.error(err); });
 }
 
 function fazerLogin() {
+    limparErros();
+    const btn = document.querySelector('#loginForm button');
+    setLoading(btn, true);
+
+    const email = document.getElementById('loginEmail').value.trim();
+    const senha = document.getElementById('loginSenha').value;
+
+    let valido = true;
+    if (!email) { mostrarErro('loginEmailError', 'Email é obrigatório.'); valido = false; }
+    else if (!validarEmail(email)) { mostrarErro('loginEmailError', 'Email inválido.'); valido = false; }
+    if (!senha) { mostrarErro('loginSenhaError', 'Senha é obrigatória.'); valido = false; }
+
+    if (!valido) { setLoading(btn, false); return; }
+
     const formData = new FormData();
-    formData.append('email', document.getElementById('loginEmail').value);
-    formData.append('senha', document.getElementById('loginSenha').value);
+    formData.append('email', email);
+    formData.append('senha', senha);
 
     fetch('/php/login.php', { method: 'POST', body: formData })
     .then(res => res.json())
     .then(data => {
+        setLoading(btn, false);
         if (data.status === 'sucesso') {
             document.getElementById('loginSenha').value = '';
             currentLoggedInUser = UserFactory.criar(data.usuario);
             localStorage.setItem('currentLoggedInUser', JSON.stringify(currentLoggedInUser));
             loadApp();
-        } else alert(data.mensagem);
-    });
+        } else {
+            mostrarErro('loginSenhaError', data.mensagem || 'Credenciais inválidas.');
+        }
+    }).catch(err => { setLoading(btn, false); console.error(err); });
 }
 
 function logout() {
@@ -543,14 +655,42 @@ function mostrarImagensEmpresa() {
 document.addEventListener('DOMContentLoaded', () => {
     loadApp();
 
-    // Enter no Login
+    // Enter no Login (qualquer campo)
+    document.getElementById('loginEmail').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') fazerLogin();
+    });
     document.getElementById('loginSenha').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') fazerLogin();
     });
 
-    // Enter no Cadastro
+    // Enter no Cadastro (qualquer campo)
+    document.getElementById('nome').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') fazerCadastro();
+    });
+    document.getElementById('email').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') fazerCadastro();
+    });
+    document.getElementById('senha').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') fazerCadastro();
+    });
     document.getElementById('confirmarSenha').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') fazerCadastro();
+    });
+
+    // CNPJ auto-format
+    document.getElementById('cadastroCNPJ').addEventListener('input', function() {
+        formatarCNPJ(this);
+    });
+
+    // Toggle pills: garantir que toggleEmpresaCampos dispare via clique no label
+    document.querySelectorAll('#cadastroTipoToggle .toggle-pill').forEach(pill => {
+        pill.addEventListener('click', function() {
+            const radio = this.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+                toggleEmpresaCampos(radio.value === 'empresa');
+            }
+        });
     });
 
     // Enter no Chat

@@ -1,31 +1,128 @@
+/* ==========================================
+   VARIÁVEIS CSS PARA TEMA CLARO E ESCURO
+   ========================================== */
+
+:root {
+    /* Cores de fundo */
+    --bg-primary: #f4f7f6;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f9f9f9;
+    --bg-card: #fdfdfd;
+    --bg-input: #ffffff;
+    --bg-modal: #fefefe;
+    --bg-chat: #e5ddd5;
+    --bg-chat-sent: #dcf8c6;
+    --bg-chat-received: #ffffff;
+    
+    /* Cores de texto */
+    --text-primary: #333;
+    --text-secondary: #555;
+    --text-tertiary: #777;
+    --text-heading: #2c3e50;
+    --text-muted: #888;
+    
+    /* Cores de borda */
+    --border-light: #eee;
+    --border-medium: #ddd;
+    --border-dark: #e0e0e0;
+    --border-input: #ccc;
+    
+    /* Cores de ação */
+    --color-primary: #007bff;
+    --color-primary-hover: #0056b3;
+    --color-success: #28a745;
+    --color-success-hover: #218838;
+    --color-danger: #dc3545;
+    --color-neutral: #6c757d;
+    
+    /* Cores de destaque */
+    --color-link: #007bff;
+    --color-filter-bg: #f0f8ff;
+    --color-filter-border: #e0f2ff;
+    --color-filter-text: #0056b3;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 15px rgba(0,0,0,0.08);
+    --shadow-lg: 0 6px 20px rgba(0,0,0,0.1);
+    --shadow-xl: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+[data-theme='dark'] {
+    /* Cores de fundo */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #242424;
+    --bg-card: #2d2d2d;
+    --bg-input: #3a3a3a;
+    --bg-modal: #2d2d2d;
+    --bg-chat: #1e1e1e;
+    --bg-chat-sent: #005c4b;
+    --bg-chat-received: #2d2d2d;
+    
+    /* Cores de texto */
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #999;
+    --text-heading: #f0f0f0;
+    --text-muted: #888;
+    
+    /* Cores de borda */
+    --border-light: #404040;
+    --border-medium: #505050;
+    --border-dark: #3a3a3a;
+    --border-input: #505050;
+    
+    /* Cores de ação (mantém as mesmas para consistência) */
+    --color-primary: #0d6efd;
+    --color-primary-hover: #0a58ca;
+    --color-success: #198754;
+    --color-success-hover: #157347;
+    --color-danger: #dc3545;
+    --color-neutral: #6c757d;
+    
+    /* Cores de destaque */
+    --color-link: #4dabf7;
+    --color-filter-bg: #1e2936;
+    --color-filter-border: #2c3e50;
+    --color-filter-text: #4dabf7;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 15px rgba(0,0,0,0.4);
+    --shadow-lg: 0 6px 20px rgba(0,0,0,0.5);
+    --shadow-xl: 0 8px 30px rgba(0,0,0,0.6);
+}
+
 /* Estilos gerais */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
             max-width: 900px;
             margin: 30px auto;
-            background-color: #ffffff;
+            background-color: var(--bg-secondary);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
         }
 
         h1, h2, h3, h4 {
-            color: #2c3e50;
+            color: var(--text-heading);
             margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid var(--border-light);
             padding-bottom: 10px;
         }
 
         button {
-            background-color: #007bff;
+            background-color: var(--color-primary);
             color: white;
             padding: 12px 25px;
             border: none;
@@ -38,7 +135,7 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: var(--color-primary-hover);
             transform: translateY(-2px);
         }
 
@@ -51,11 +148,13 @@
             width: calc(100% - 22px);
             padding: 12px;
             margin-bottom: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-medium);
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 1em;
             transition: border-color 0.3s ease;
+            background-color: var(--bg-input);
+            color: var(--text-primary);
         }
 
         input[type="text"]:focus,
@@ -64,7 +163,7 @@
         input[type="number"]:focus,
         textarea:focus,
         select:focus {
-            border-color: #007bff;
+            border-color: var(--color-primary);
             outline: none;
         }
 
@@ -76,7 +175,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
-            color: #555;
+            color: var(--text-secondary);
         }
 
         .radio-group label {
@@ -86,7 +185,9 @@
 
         /* Seções de autenticação */
         #authContainer {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .auth-forms {
@@ -98,14 +199,16 @@
         }
 
         .form {
-            background-color: #f9f9f9;
+            background-color: var(--bg-tertiary);
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-md);
             width: 45%;
-            min-width: 300px;
+            min-width: 340px;
+            max-width: 480px;
             display: none;
             text-align: left;
+            margin: 0 auto;
         }
 
         .form.active {
@@ -117,36 +220,36 @@
         }
 
         .form-toggle button {
-            background-color: #e9ecef;
-            color: #495057;
+            background-color: var(--bg-input);
+            color: var(--text-primary);
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
             margin: 0 5px;
             transition: background-color 0.2s ease, color 0.2s ease;
             font-weight: bold;
-            border: 1px solid #dee2e6;
+            border: 1px solid var(--border-medium);
             margin-top: 0;
         }
 
         .form-toggle button.active {
-            background-color: #007bff;
+            background-color: var(--color-primary);
             color: white;
-            border-color: #007bff;
+            border-color: var(--color-primary);
         }
 
         .form-toggle button:hover:not(.active) {
-            background-color: #d3d3d3;
+            background-color: var(--border-light);
         }
 
         /* Dashboards */
         #visitanteContainer, #empresaContainer {
             display: none;
             padding: 20px;
-            border: 1px solid #eee;
+            border: 1px solid var(--border-light);
             border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background-color: var(--bg-secondary);
+            box-shadow: var(--shadow-sm);
         }
 
         .dashboard-header {
@@ -155,24 +258,24 @@
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid var(--border-light);
         }
 
         .dashboard-header h2 {
             margin: 0;
-            color: #2c3e50;
+            color: var(--text-heading);
             flex-grow: 1;
         }
 
         .dashboard-nav {
             margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-light);
             padding-bottom: 10px;
         }
 
         .dashboard-nav button {
-            background-color: #e9ecef;
-            color: #495057;
+            background-color: var(--bg-input);
+            color: var(--text-primary);
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -183,12 +286,12 @@
         }
 
         .dashboard-nav button.active {
-            background-color: #007bff;
+            background-color: var(--color-primary);
             color: white;
         }
 
         .dashboard-nav button:hover:not(.active) {
-            background-color: #dee2e6;
+            background-color: var(--border-light);
         }
 
         .profile-page {
@@ -206,7 +309,7 @@
         }
 
         .profile-info strong {
-            color: #444;
+            color: var(--text-secondary);
         }
 
         .image-gallery {
@@ -214,12 +317,13 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 15px;
-            border: 1px dashed #ccc;
+            border: 1px dashed var(--border-input);
             padding: 10px;
             border-radius: 8px;
             min-height: 80px;
             align-items: center;
             justify-content: center;
+            background-color: var(--bg-tertiary);
         }
 
         .image-gallery img {
@@ -227,8 +331,8 @@
             max-height: 120px;
             border-radius: 5px;
             object-fit: cover;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-medium);
+            box-shadow: var(--shadow-sm);
         }
 
         /* Profile Image Styles */
@@ -239,28 +343,28 @@
             object-fit: cover;
             margin: 0 auto 20px auto;
             display: block;
-            border: 3px solid #007bff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--color-primary);
+            box-shadow: var(--shadow-md);
         }
 
         /* Seção de exploração de empresas */
         #exploreCompanies .company-card {
-            background-color: #fdfdfd;
-            border: 1px solid #e0e0e0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-dark);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         #exploreCompanies .company-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
         }
 
         #exploreCompanies .company-card h3 {
-            color: #007bff;
+            color: var(--color-link);
             margin-top: 0;
             margin-bottom: 10px;
             border-bottom: none;
@@ -274,14 +378,14 @@
         .filter-section {
             margin-bottom: 25px;
             padding: 15px;
-            background-color: #f0f8ff;
+            background-color: var(--color-filter-bg);
             border-radius: 10px;
-            border: 1px solid #e0f2ff;
+            border: 1px solid var(--color-filter-border);
         }
 
         .filter-section label {
             font-weight: bold;
-            color: #0056b3;
+            color: var(--color-filter-text);
             margin-right: 10px;
         }
 
@@ -289,7 +393,7 @@
             width: auto;
             padding: 8px 12px;
             border-radius: 5px;
-            border: 1px solid #a8d9ff;
+            border: 1px solid var(--color-filter-border);
         }
 
         /* Modal */
@@ -310,10 +414,10 @@
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: var(--bg-modal);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow-xl);
             width: 90%;
             max-width: 700px;
             position: relative;
@@ -328,7 +432,7 @@
         }
 
         .close-modal {
-            color: #aaa;
+            color: var(--text-muted);
             position: absolute;
             top: 15px;
             right: 25px;
@@ -340,11 +444,11 @@
 
         .close-modal:hover,
         .close-modal:focus {
-            color: #333;
+            color: var(--text-primary);
         }
 
         .modal-content h3 {
-            color: #007bff;
+            color: var(--color-link);
             margin-top: 0;
         }
 
@@ -361,24 +465,24 @@
         }
 
         #addPublicationBtn, #addCompanyPublicationBtn {
-            background-color: #28a745;
+            background-color: var(--color-success);
             margin-bottom: 20px;
         }
         #addPublicationBtn:hover, #addCompanyPublicationBtn:hover {
-            background-color: #218838;
+            background-color: var(--color-success-hover);
         }
 
         .publication-entry {
-            background-color: #fdfdfd;
-            border: 1px solid #e0e0e0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-dark);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
         }
 
         .publication-entry h4 {
-            color: #007bff;
+            color: var(--color-link);
             margin-top: 0;
             margin-bottom: 10px;
             border-bottom: none;
@@ -387,13 +491,13 @@
 
         .publication-entry .meta {
             font-size: 0.9em;
-            color: #777;
+            color: var(--text-tertiary);
             margin-bottom: 15px;
         }
 
         .publication-entry .image-gallery {
-            border: 1px dashed #aed6f1;
-            background-color: #e6f7ff;
+            border: 1px dashed var(--border-medium);
+            background-color: var(--bg-tertiary);
         }
 
         /* Chat Overlay */
@@ -411,9 +515,9 @@
         }
 
         .chat-window {
-            background-color: #fff;
+            background-color: var(--bg-secondary);
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-xl);
             width: 90%;
             max-width: 500px;
             height: 70vh;
@@ -423,7 +527,7 @@
         }
 
         .chat-header {
-            background-color: #007bff;
+            background-color: var(--color-primary);
             color: white;
             padding: 15px;
             border-top-left-radius: 10px;
@@ -452,36 +556,36 @@
             flex-grow: 1;
             padding: 15px;
             overflow-y: auto;
-            background-color: #e5ddd5;
+            background-color: var(--bg-chat);
             display: flex;
             flex-direction: column;
         }
 
         .chat-messages .message {
-            background-color: #ffffff;
+            background-color: var(--bg-chat-received);
             border-radius: 10px;
             padding: 10px 15px;
             margin-bottom: 10px;
             max-width: 75%;
             word-wrap: break-word;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-sm);
             position: relative;
             font-size: 0.95em;
         }
 
         .chat-messages .message.sent {
-            background-color: #dcf8c6;
+            background-color: var(--bg-chat-sent);
             align-self: flex-end;
         }
 
         .chat-messages .message.received {
-            background-color: #fff;
+            background-color: var(--bg-chat-received);
             align-self: flex-start;
         }
 
         .chat-messages .message .sender-name {
             font-weight: bold;
-            color: #0056b3;
+            color: var(--color-primary-hover);
             display: block;
             margin-bottom: 5px;
         }
@@ -510,7 +614,7 @@
             display: flex;
             padding: 15px;
             gap: 10px;
-            background-color: #fff;
+            background-color: var(--bg-secondary);
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
             align-items: center;
@@ -521,13 +625,13 @@
             margin-bottom: 0;
             padding: 10px;
             border-radius: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-input);
         }
         .chat-input-area input[type="file"] {
             display: none;
         }
         .chat-input-area label.file-label {
-            background-color: #007bff;
+            background-color: var(--color-primary);
             color: white;
             padding: 10px 12px;
             border-radius: 50%;
@@ -541,7 +645,7 @@
             transition: background-color 0.2s ease;
         }
         .chat-input-area label.file-label:hover {
-            background-color: #0056b3;
+            background-color: var(--color-primary-hover);
         }
 
         .chat-input-area button {
@@ -549,11 +653,11 @@
             padding: 10px 20px;
             margin-top: 0;
             border-radius: 20px;
-            background-color: #28a745;
+            background-color: var(--color-success);
             font-size: 1em;
         }
         .chat-input-area button:hover {
-            background-color: #218838;
+            background-color: var(--color-success-hover);
         }
 
         /* Lista de Chats */
@@ -567,16 +671,16 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-light);
             cursor: pointer;
-            background-color: #f9f9f9;
+            background-color: var(--bg-tertiary);
             margin-bottom: 8px;
             border-radius: 8px;
             transition: background-color 0.2s ease;
         }
 
         .chat-list-item:hover {
-            background-color: #f0f0f0;
+            background-color: var(--bg-input);
         }
 
         .chat-list-item .chat-info {
@@ -591,7 +695,7 @@
             border-radius: 50%;
             object-fit: cover;
             margin-right: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-medium);
         }
 
         .chat-list-item .chat-info div {
@@ -600,7 +704,7 @@
 
         .chat-list-item .chat-info h4 {
             margin: 0;
-            color: #007bff;
+            color: var(--color-link);
             border-bottom: none;
             padding-bottom: 0;
         }
@@ -608,7 +712,7 @@
         .chat-list-item .chat-info p {
             margin: 5px 0 0;
             font-size: 0.9em;
-            color: #666;
+            color: var(--text-tertiary);
         }
 
         .chat-list-item .chat-actions button {
@@ -626,4 +730,224 @@
             padding: 4px 8px;
             border-radius: 12px;
             margin-left: 15px;
+        }
+
+        /* ==========================================
+           NOVOS ESTILOS - LOGIN / CADASTRO MELHORADOS
+           ========================================== */
+
+        /* Password Toggle */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+        .password-wrapper input {
+            padding-right: 48px;
+            margin-bottom: 0;
+            flex: 1;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            bottom: 2px;
+            width: 42px;
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            border-radius: 0 7px 7px 0;
+            cursor: pointer;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            transition: color 0.2s, background-color 0.2s;
+            z-index: 2;
+        }
+        .password-toggle:hover {
+            color: #007bff;
+            background-color: rgba(0, 123, 255, 0.06);
+            transform: none;
+        }
+
+        /* Toggle Pills (Visitante / Empresa) */
+        .toggle-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .toggle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95em;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        .toggle-pill:hover {
+            background: var(--border-light);
+        }
+        .toggle-pill:has(input[type="radio"]:checked) {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+        .toggle-pill input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin: 0;
+        }
+
+        /* Loading Spinner */
+        .btn-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: btnSpin 0.65s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes btnSpin {
+            to { transform: rotate(360deg); }
+        }
+        button.loading .btn-spinner {
+            display: inline-block;
+        }
+        button.loading .btn-text {
+            display: none;
+        }
+        button.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* Error Messages */
+        .error-message {
+            display: block;
+            font-size: 0.82em;
+            color: var(--color-danger);
+            margin-top: 4px;
+            min-height: 0;
+            opacity: 0;
+            transition: opacity 0.25s ease, margin 0.25s ease;
+            line-height: 1.3;
+        }
+        .error-message.visible {
+            opacity: 1;
+        }
+
+        /* Input error state */
+        input.input-error,
+        select.input-error {
+            border-color: var(--color-danger) !important;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        input.input-success {
+            border-color: var(--color-success) !important;
+        }
+
+        /* Success animation for form toggle */
+        .form {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .form.active {
+            animation: formSlideIn 0.35s ease-out;
+        }
+        @keyframes formSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Auth container heading improvement */
+        #authContainer h2 {
+            border-bottom: none;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        /* Botão de Alternância de Tema */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1002;
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-medium);
+            border-radius: 50px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary);
+        }
+
+        .theme-toggle .icon {
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover .icon {
+            transform: rotate(20deg);
+        }
+
+        /* Responsive auth adjustments */
+        @media (max-width: 600px) {
+            .form {
+                min-width: unset;
+                max-width: 100%;
+                width: 100%;
+                padding: 20px 16px;
+            }
+            #authContainer {
+                padding: 20px 12px;
+                margin: 16px auto;
+            }
+            .toggle-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .toggle-pill {
+                justify-content: center;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 1em;
+            }
         }

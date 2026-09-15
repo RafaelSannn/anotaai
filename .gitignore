@@ -29,6 +29,11 @@ tmp/
 Thumbs.db
 desktop.ini
 
-# --- CONFIGURAÇÕES SENSÍVEIS (SEU BACKUP) ---
+# --- CONFIGURAÇÕES SENSÍVEIS ---
 application.properties.old
 .env
+application-prod.properties
+
+# --- RUNTIME ---
+*.pid
+anotaai.pid
