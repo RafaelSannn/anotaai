@@ -350,7 +350,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 **Rafael Souza**
 Estudante de Engenharia da Computação
 
-📧 Email: rafaelsouza@email.com
+📧 Email: rafael.santana.sb@gmail.com
 🎓 Projeto Acadêmico - 2024.2
 
 ---

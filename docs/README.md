@@ -156,7 +156,7 @@ Veja análise completa em [`ROADMAP_TECNICO.md`](ROADMAP_TECNICO.md#-veredito-pa
 
 **Desenvolvido por:** Rafael Souza  
 **Curso:** Engenharia da Computação  
-**Email:** rafaelsouza@email.com  
+**Email:** rafael.santana.sb@gmail.com  
 **Ano:** 2024.2
 
 Para dúvidas técnicas, consulte:

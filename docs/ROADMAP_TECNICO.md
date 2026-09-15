@@ -521,5 +521,5 @@ O projeto AnotaAí demonstra:
 
 **Desenvolvido por:** Rafael Souza  
 **Curso:** Engenharia da Computação  
-**Contato:** rafaelsouza@email.com  
+**Contato:** rafael.santana.sb@gmail.com  
 **Última Atualização:** 15/09/2026
