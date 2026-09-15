@@ -6,20 +6,10 @@
 
 ## 📖 Documentos Disponíveis
 
-### 🎓 Trabalho Acadêmico
-| Documento | Descrição |
-|-----------|-----------|
-| [`ARTIGO_CIENTIFICO.md`](ARTIGO_CIENTIFICO.md) | Artigo completo seguindo template da Revista REASE com metodologia, resultados e análise técnica |
-
 ### 🚀 Roadmap e Planejamento
 | Documento | Descrição |
 |-----------|-----------|
-| [`ROADMAP_TECNICO.md`](ROADMAP_TECNICO.md) | Evolução v1.0→v2.0, funcionalidades implementadas, roadmap futuro (3 fases), métricas técnicas e **veredito para publicação científica** |
-
-### 📚 Referências
-| Pasta | Conteúdo |
-|-------|----------|
-| [`referencias-academicas/`](referencias-academicas/) | PDFs de metodologia científica, templates e guias para elaboração do artigo |
+| [`ROADMAP_TECNICO.md`](ROADMAP_TECNICO.md) | Evolução v1.0→v2.0, funcionalidades implementadas, roadmap futuro (3 fases), métricas técnicas e veredito para publicação científica |
 
 ---
 
