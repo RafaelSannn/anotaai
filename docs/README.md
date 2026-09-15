@@ -144,7 +144,7 @@ Veja análise completa em [`ROADMAP_TECNICO.md`](ROADMAP_TECNICO.md#-veredito-pa
 
 ## 📞 Suporte
 
-**Desenvolvido por:** Rafael Souza  
+**Desenvolvido por:** Rafael Santana Barroso de Souza  
 **Curso:** Engenharia da Computação  
 **Email:** rafael.santana.sb@gmail.com  
 **Ano:** 2024.2

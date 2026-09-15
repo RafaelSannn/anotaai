@@ -1,7 +1,7 @@
 # 🚀 Roadmap Técnico - AnotaAí
 
 **Projeto:** AnotaAí - Plataforma de Conexão de Serviços  
-**Autor:** Rafael Souza - Engenharia da Computação  
+**Autor:** Rafael Santana Barroso de Souza - Engenharia da Computação  
 **Versão Atual:** 2.0  
 **Data:** 15 de Setembro de 2026
 
@@ -519,7 +519,7 @@ O projeto AnotaAí demonstra:
 
 ---
 
-**Desenvolvido por:** Rafael Souza  
+**Desenvolvido por:** Rafael Santana Barroso de Souza  
 **Curso:** Engenharia da Computação  
 **Contato:** rafael.santana.sb@gmail.com  
 **Última Atualização:** 15/09/2026

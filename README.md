@@ -347,7 +347,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-**Rafael Souza**
+**Rafael Santana Barroso de Souza**
 Estudante de Engenharia da Computação
 
 📧 Email: rafael.santana.sb@gmail.com
