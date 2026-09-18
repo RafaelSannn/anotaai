@@ -1,6 +1,6 @@
-# 🚀 Roadmap Técnico - AnotaAí
+# 🚀 Roadmap Técnico - Disclosed Companies
 
-**Projeto:** AnotaAí - Plataforma de Conexão de Serviços  
+**Projeto:** Disclosed Companies - Plataforma de Conexão de Serviços  
 **Autor:** Rafael Santana Barroso de Souza - Engenharia da Computação  
 **Versão Atual:** 2.0  
 **Data:** 15 de Setembro de 2026
@@ -67,12 +67,12 @@
 
 ```properties
 # application-dev.properties
-spring.datasource.url=jdbc:h2:mem:anotaai
+spring.datasource.url=jdbc:h2:mem:disclosedcompanies
 spring.h2.console.enabled=true
 spring.jpa.hibernate.ddl-auto=create-drop
 
 # application-prod.properties  
-spring.datasource.url=jdbc:mariadb://localhost:3306/anotaai
+spring.datasource.url=jdbc:mariadb://localhost:3306/disclosed_companies
 spring.jpa.hibernate.ddl-auto=update
 ```
 
@@ -469,14 +469,14 @@ Banco MariaDB:        ~100ms (local)
    - Proposta de otimizações
 
 5. **Comparativo Técnico**
-   - Tabela comparativa: AnotaAí vs Concorrentes
+   - Tabela comparativa: Disclosed Companies vs Concorrentes
    - Análise de diferenciais técnicos
    - Justificativa de escolhas arquiteturais
 
 ### 📝 Sugestão de Título para Artigo
 
 **Título Principal:**  
-*"AnotaAí: Desenvolvimento de uma Plataforma Web para Conexão entre Prestadores de Serviços e Clientes usando Spring Boot e Arquitetura MVC"*
+*"Disclosed Companies: Desenvolvimento de uma Plataforma Web para Conexão entre Prestadores de Serviços e Clientes usando Spring Boot e Arquitetura MVC"*
 
 **Título Alternativo:**  
 *"Implementação de um Marketplace de Serviços Locais com Spring Boot 4.0: Arquitetura, Desenvolvimento e Avaliação"*
@@ -496,7 +496,7 @@ Banco MariaDB:        ~100ms (local)
 
 **Veredito:** ✅ **APTO PARA PUBLICAÇÃO ACADÊMICA**
 
-O projeto AnotaAí demonstra:
+O projeto Disclosed Companies demonstra:
 - ✅ Competência técnica em desenvolvimento full-stack
 - ✅ Conhecimento de boas práticas (SOLID, Clean Code, DRY)
 - ✅ Capacidade de documentação profissional

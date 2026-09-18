@@ -1,16 +1,16 @@
 #!/bin/bash
 
-echo "🛑 Parando AnotaAí..."
+echo "🛑 Parando Disclosed Companies..."
 
-if [ -f anotaai.pid ]; then
-    PID=$(cat anotaai.pid)
+if [ -f disclosed-companies.pid ]; then
+    PID=$(cat disclosed-companies.pid)
     if ps -p $PID > /dev/null; then
         kill $PID
         echo "✓ Aplicação parada (PID: $PID)"
-        rm anotaai.pid
+        rm disclosed-companies.pid
     else
         echo "✗ Processo não encontrado"
-        rm anotaai.pid
+        rm disclosed-companies.pid
     fi
 else
     echo "✗ PID file not found"

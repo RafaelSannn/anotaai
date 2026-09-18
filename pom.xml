@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.projeto</groupId>
-	<artifactId>anotaai</artifactId>
+	<artifactId>disclosed-companies</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>

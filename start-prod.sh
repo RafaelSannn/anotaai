@@ -7,7 +7,7 @@
 
 set -e
 
-echo "🚀 Iniciando AnotaAi em modo PRODUÇÃO (MariaDB)..."
+echo "🚀 Iniciando Disclosed Companies em modo PRODUÇÃO (MariaDB)..."
 echo ""
 
 # Verificar se MariaDB está rodando
@@ -18,8 +18,8 @@ if ! systemctl is-active --quiet mariadb; then
 fi
 
 # Verificar se o banco existe
-if ! mysql -u anotaai_user -panotaai123 -e "USE anotaai;" 2>/dev/null; then
-    echo "❌ Banco de dados 'anotaai' não encontrado!"
+if ! mysql -u dc_user -pdc_pass123 -e "USE disclosed_companies;" 2>/dev/null; then
+    echo "❌ Banco de dados 'disclosed_companies' não encontrado!"
     echo "   Execute primeiro: sudo ./setup-mariadb.sh"
     exit 1
 fi
@@ -35,7 +35,7 @@ fi
 
 echo "✅ Iniciando aplicação em modo PRODUÇÃO..."
 echo "   Profile: prod"
-echo "   Database: MariaDB (localhost:3306/anotaai)"
+echo "   Database: MariaDB (localhost:3306/disclosed_companies)"
 echo "   Acesse: http://localhost:8080"
 echo ""
 echo "💡 Dados são PERSISTENTES - não serão perdidos ao reiniciar"

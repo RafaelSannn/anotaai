@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # ==========================================
-# Script de Instalação do MariaDB - AnotaAi
+# Script de Instalação do MariaDB - Disclosed Companies
 # ==========================================
 # Instala e configura MariaDB para produção
 # Compatível com Ubuntu/Debian e derivados
 
 set -e
 
-echo "🗄️  Instalando MariaDB para AnotaAi..."
+echo "🗄️  Instalando MariaDB para Disclosed Companies..."
 echo ""
 
 # Verificar se é root
@@ -51,13 +51,13 @@ sleep 3
 echo "🔧 Configurando banco de dados e usuário..."
 mariadb -u root <<-EOF
 -- Criar database
-CREATE DATABASE IF NOT EXISTS anotaai CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS disclosed_companies CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Criar usuário
-CREATE USER IF NOT EXISTS 'anotaai_user'@'localhost' IDENTIFIED BY 'anotaai123';
+CREATE USER IF NOT EXISTS 'dc_user'@'localhost' IDENTIFIED BY 'dc_pass123';
 
 -- Conceder permissões
-GRANT ALL PRIVILEGES ON anotaai.* TO 'anotaai_user'@'localhost';
+GRANT ALL PRIVILEGES ON disclosed_companies.* TO 'dc_user'@'localhost';
 FLUSH PRIVILEGES;
 
 -- Mostrar databases
@@ -70,9 +70,9 @@ echo ""
 echo "📊 Informações de Conexão:"
 echo "   Host: localhost"
 echo "   Porta: 3306"
-echo "   Database: anotaai"
-echo "   Usuário: anotaai_user"
-echo "   Senha: anotaai123"
+echo "   Database: disclosed_companies"
+echo "   Usuário: dc_user"
+echo "   Senha: dc_pass123"
 echo ""
 echo "🔧 Para gerenciar via DBeaver:"
 echo "   1. Abra o DBeaver"

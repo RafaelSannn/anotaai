@@ -1,4 +1,4 @@
-# 🚀 AnotaAí - Plataforma de Conexão de Serviços
+# 🚀 Disclosed Companies - Plataforma de Conexão de Serviços
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
@@ -6,7 +6,7 @@
 
 > Plataforma que conecta prestadores de serviços (empresas) com clientes (visitantes), facilitando a contratação de serviços locais.
 
-![AnotaAí Preview](docs/preview.png)
+![Disclosed Companies Preview](docs/preview.png)
 
 ---
 
@@ -27,7 +27,7 @@
 
 ## 🎯 Sobre o Projeto
 
-O **AnotaAí** é uma plataforma web desenvolvida como projeto acadêmico que simula um marketplace de serviços locais. A aplicação permite que:
+O **Disclosed Companies** é uma plataforma web desenvolvida como projeto acadêmico que simula um marketplace de serviços locais. A aplicação permite que:
 
 - 👤 **Visitantes** busquem empresas, publiquem necessidades de serviços e entrem em contato via chat
 - 🏢 **Empresas** criem perfis profissionais, publiquem seus serviços e recebam solicitações
@@ -105,8 +105,8 @@ O **AnotaAí** é uma plataforma web desenvolvida como projeto acadêmico que si
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/anotaai.git
-cd anotaai
+git clone https://github.com/seu-usuario/disclosed-companies.git
+cd disclosed-companies
 
 # 2. Execute o script de instalação
 ./install.sh
@@ -138,7 +138,7 @@ Se preferir usar uma IDE (IntelliJ IDEA, Eclipse, VS Code):
 
 1. Importe o projeto como **Maven Project**
 2. Aguarde o download das dependências
-3. Execute a classe `AnotaaiApplication.java`
+3. Execute a classe `DisclosedCompaniesApplication.java`
 
 ---
 
@@ -187,7 +187,7 @@ Para visualizar o banco de dados:
 
 1. Acesse: **http://localhost:8080/h2-console**
 2. Configure:
-   - **JDBC URL:** `jdbc:h2:mem:anotaai`
+   - **JDBC URL:** `jdbc:h2:mem:disclosedcompanies`
    - **Username:** `sa`
    - **Password:** _(deixe em branco)_
 3. Clique em **Connect**
@@ -197,17 +197,17 @@ Para visualizar o banco de dados:
 ## 📁 Estrutura do Projeto
 
 ```
-anotaai/
+disclosed-companies/
 ├── src/
 │   ├── main/
-│   │   ├── java/br/com/projeto/anotaai/
+│   │   ├── java/br/com/projeto/disclosed-companies/
 │   │   │   ├── config/           # Configurações (Security, DataInitializer)
 │   │   │   ├── controller/       # Controllers REST
 │   │   │   ├── dto/               # Data Transfer Objects
 │   │   │   ├── model/             # Entidades JPA
 │   │   │   ├── repository/        # Repositórios Spring Data
 │   │   │   ├── service/           # Lógica de negócio
-│   │   │   └── AnotaaiApplication.java
+│   │   │   └── DisclosedCompaniesApplication.java
 │   │   └── resources/
 │   │       ├── application.properties
 │   │       └── static/
@@ -313,7 +313,7 @@ Edite [`index.html`](src/main/resources/static/index.html:94) e adicione em ambo
 Edite [`application.properties`](src/main/resources/application.properties:19) e descomente:
 
 ```properties
-spring.datasource.url=jdbc:mariadb://localhost:3306/anotaai
+spring.datasource.url=jdbc:mariadb://localhost:3306/disclosed_companies
 spring.datasource.username=root
 spring.datasource.password=${DB_PASSWORD}
 ```

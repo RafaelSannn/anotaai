@@ -4,7 +4,7 @@
 -- Execute: sudo mariadb -u root < setup-dados-teste.sql
 -- =====================================================
 
-USE anotaai;
+USE disclosed_companies;
 
 -- Limpar dados existentes
 SET FOREIGN_KEY_CHECKS = 0;

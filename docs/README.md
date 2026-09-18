@@ -1,4 +1,4 @@
-# 📚 Documentação do Projeto AnotaAi
+# 📚 Documentação do Projeto Disclosed Companies
 
 > Índice completo da documentação técnica e acadêmica
 
@@ -37,7 +37,7 @@ sudo mariadb < setup-dados-teste.sql
 # 4. Acessar
 # URL: http://localhost:8080
 # Login: joao@email.com / 123456
-# DBeaver: localhost:3306, user: anotaai_user, senha: anotaai123
+# DBeaver: localhost:3306, user: dc_user, senha: dc_pass123
 ```
 
 Consulte [`../INICIO_RAPIDO.md`](../INICIO_RAPIDO.md) para guia detalhado.

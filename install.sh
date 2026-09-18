@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 AnotaAí - Script de Instalação Automatizada"
+echo "🚀 Disclosed Companies - Script de Instalação Automatizada"
 echo "=============================================="
 echo ""
 

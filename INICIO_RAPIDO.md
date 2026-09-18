@@ -11,9 +11,9 @@ Abra um terminal no VSCode (Ctrl+` ou Terminal > New Terminal) e execute:
 sudo mariadb -u root
 
 # Dentro do MariaDB, execute estes comandos:
-CREATE DATABASE IF NOT EXISTS anotaai CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS 'anotaai_user'@'localhost' IDENTIFIED BY 'anotaai123';
-GRANT ALL PRIVILEGES ON anotaai.* TO 'anotaai_user'@'localhost';
+CREATE DATABASE IF NOT EXISTS disclosed_companies CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER IF NOT EXISTS 'dc_user'@'localhost' IDENTIFIED BY 'dc_pass123';
+GRANT ALL PRIVILEGES ON disclosed_companies.* TO 'dc_user'@'localhost';
 FLUSH PRIVILEGES;
 SHOW DATABASES;
 exit;
@@ -56,7 +56,7 @@ Ou manualmente:
 
 Você verá:
 ```
-Started AnotaaiApplication in X.XXX seconds
+Started DisclosedCompaniesApplication in X.XXX seconds
 ```
 
 ---
@@ -84,9 +84,9 @@ curl http://localhost:8080
    ```
    Host: localhost
    Porta: 3306
-   Database: anotaai
-   Usuário: anotaai_user
-   Senha: anotaai123
+   Database: disclosed_companies
+   Usuário: dc_user
+   Senha: dc_pass123
    ```
 5. Clique em **Test Connection** (deve aparecer "Connected")
 6. Clique em **Finish**
@@ -161,9 +161,9 @@ java -version
 ```bash
 # Recriar o usuário
 sudo mariadb -u root
-DROP USER IF EXISTS 'anotaai_user'@'localhost';
-CREATE USER 'anotaai_user'@'localhost' IDENTIFIED BY 'anotaai123';
-GRANT ALL PRIVILEGES ON anotaai.* TO 'anotaai_user'@'localhost';
+DROP USER IF EXISTS 'dc_user'@'localhost';
+CREATE USER 'dc_user'@'localhost' IDENTIFIED BY 'dc_pass123';
+GRANT ALL PRIVILEGES ON disclosed_companies.* TO 'dc_user'@'localhost';
 FLUSH PRIVILEGES;
 exit;
 ```
@@ -188,8 +188,8 @@ sudo lsof -t -i:8080 | xargs kill -9
 ## ✅ Checklist
 
 - [ ] MariaDB instalado e rodando
-- [ ] Banco `anotaai` criado
-- [ ] Usuário `anotaai_user` criado
+- [ ] Banco `disclosed_companies` criado
+- [ ] Usuário `dc_user` criado
 - [ ] Aplicação iniciada em modo PROD
 - [ ] DBeaver conectado
 - [ ] Primeiro usuário cadastrado

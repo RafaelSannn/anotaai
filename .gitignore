@@ -36,4 +36,4 @@ application-prod.properties
 
 # --- RUNTIME ---
 *.pid
-anotaai.pid
+disclosed-companies.pid
